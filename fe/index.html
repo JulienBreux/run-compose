@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="mealApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Meal Tracker</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .meal-item { margin-bottom: 5px; padding: 10px; border: 1px solid #ccc; }
+        .form-group { margin-bottom: 10px; }
+    </style>
+</head>
+<body ng-controller="MealController">
+
+    <h1>Meal Tracker</h1>
+
+    <div style="margin-bottom: 20px;">
+        <h3>Add Meal</h3>
+        <form ng-submit="addMeal()">
+            <div class="form-group">
+                <input type="text" ng-model="newMeal.name" placeholder="Meal Name" required>
+            </div>
+            <div class="form-group">
+                <input type="number" ng-model="newMeal.calories" placeholder="Calories" required>
+            </div>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+
+    <h3>Meal History</h3>
+    <div ng-repeat="meal in meals" class="meal-item">
+        <strong>{{meal.name}}</strong> - {{meal.calories}} calories
+        <br>
+        <small>{{meal.created_at}}</small>
+    </div>
+
+</body>
+</html>
