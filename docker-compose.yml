@@ -1,4 +1,6 @@
-version: '3.8'
+# sudo apt-get update
+# sudo apt-get install google-cloud-cli-run-compose
+# gcloud beta run compose up --region us-central1
 
 services:
   db:
@@ -44,7 +46,7 @@ services:
   fe:
     build: ./fe
     ports:
-      - "80:80"
+      - "1024:80"
     depends_on:
       - be
 
