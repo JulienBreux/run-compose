@@ -79,23 +79,24 @@ func main() {
 
 	http.HandleFunc("/api/meals", handleMeals)
 
-	log.Println("Server starting on :8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Server starting on :8181")
+	log.Fatal(http.ListenAndServe(":8181", nil))
 }
 
 func handleMeals(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	if r.Method == "GET" {
+	switch r.Method {
+	case "GET":
 		getMeals(w, r)
-	} else if r.Method == "POST" {
+	case "POST":
 		createMeal(w, r)
-	} else {
+	default:
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
-func getMeals(w http.ResponseWriter, r *http.Request) {
+func getMeals(w http.ResponseWriter, _ *http.Request) {
 	// Try to get from cache
 	val, err := rdb.Get(ctx, "meals").Result()
 	if err == nil {

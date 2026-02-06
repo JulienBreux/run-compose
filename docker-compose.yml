@@ -1,6 +1,8 @@
 # sudo apt-get update
 # sudo apt-get install google-cloud-cli-run-compose
-# gcloud beta run compose up --region us-central1
+# gcloud beta run compose up --region us-central1 --allow-unauthenticated
+
+# docker compose up --build --force-recreate
 
 services:
   db:
@@ -16,6 +18,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    ports:
+      - "5432:5432"
 
   redis:
     image: redis:6-alpine
@@ -24,6 +28,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    ports:
+      - "6379:6379"
 
   be:
     build: ./be
@@ -41,12 +47,12 @@ services:
       redis:
         condition: service_healthy
     ports:
-      - "8080:8080"
+      - "8181:8181"
 
   fe:
     build: ./fe
     ports:
-      - "1024:80"
+      - "8080:8080"
     depends_on:
       - be
 
